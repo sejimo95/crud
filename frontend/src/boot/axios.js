@@ -20,9 +20,12 @@ export default boot(({ app, router, store }) => {
       localStorage.token = null
       axios.defaults.headers.common['Authorization'] = ''
       router.push('/login');
-    } else if (error.response.status !== 404) {
+    } else if (error.response.status === 500) {
       alert('Connection Failed!')
     }
+
+    // return Error object with Promise
+    return Promise.reject(error);
   });
 
   app.config.globalProperties.$axios = axios

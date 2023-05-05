@@ -4,12 +4,7 @@
       <q-card-section>
         <div class="row q-col-gutter-sm">
           <div class="col col-12 title">
-            <q-img
-              src="~assets/logo.png"
-              style="height: 150px;"
-              class="q-mb-md"
-              fit="contain"
-            />
+            <q-img src="~assets/logo.png" style="height: 150px;" class="q-mb-md" fit="contain"/>
           </div>
           <div class="col col-12">
             <div>E-mail</div>
@@ -63,14 +58,13 @@ export default {
 
       app.$axios.post(app.$s.api + 'api/v1/auth/admin-login', data)
         .then(function (response) {
-          if (response.data.success) {
-            localStorage.token = response.data.token
-            app.$s.user = response.data.user
-            app.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
-            app.$router.push('/')
-          } else {
-            app.notify(response.data.message)
-          }
+          localStorage.token = response.data.token
+          app.$s.user = response.data.user
+          app.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
+          app.$router.push('/admin/dashboard')
+        })
+        .catch(function (error) {
+          app.notify(error.response.data.message)
         })
         .finally(function () {
           app.loading = false

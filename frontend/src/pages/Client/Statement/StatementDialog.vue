@@ -15,7 +15,7 @@
             <q-input filled dense v-model="_info.name" />
           </div>
           <div class="col-12">
-            <div>Date</div>
+            <div>Date (YYYY/MM/DD)</div>
             <q-input ref="dateInput" filled dense v-model="_info.date" @click="$refs.dateInput.select()">
               <template v-slot:prepend>
                 <q-icon color="primary" name="mdi-calendar-month">
@@ -64,11 +64,12 @@ export default {
 
       app.$axios.post(path, form)
         .then(function (response) {
-          if (response.data.success) {
-            app.$emit('reload')
-            app._dialog = false
-          }
+          app.$emit('reload')
+          app._dialog = false
           app.notify(response.data.message)
+        })
+        .catch(function (error) {
+          app.notify(error.response.data.message)
         })
         .finally(function () {
           app.loading = false

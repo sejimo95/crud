@@ -66,14 +66,13 @@ export default {
 
       app.$axios.post(app.$s.api + 'api/v1/auth/register', data)
         .then(function (response) {
-          if (response.data.success) {
-            localStorage.token = response.data.token
-            app.$s.user = response.data.user
-            app.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
-            app.$router.push('/')
-          } else {
-            app.notify(response.data.message)
-          }
+          localStorage.token = response.data.token
+          app.$s.user = response.data.user
+          app.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
+          app.$router.push('/dashboard')
+        })
+        .catch(function (error) {
+          app.notify(error.response.data.message)
         })
         .finally(function () {
           app.loading = false

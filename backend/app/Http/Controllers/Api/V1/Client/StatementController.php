@@ -26,16 +26,16 @@ class StatementController extends Controller
 
     public function store(StoreRequest $request)
     {
-        Statement::create($request->validated());
-        return ['success' => true, 'message' => 'Successfully stored'];
+        $statement = Statement::create($request->validated());
+        return response()->json(['message' => 'Successfully stored', 'statement' => $statement], 200);
     }
 
     public function update(UpdateRequest $request)
     {
-        $user = auth()->user();
+        $user = auth()->guard('client')->user();
         $statement = Statement::where([['user_id', $user->id], ['id', $request->id]])->firstOrFail();
         $statement->update($request->validated());
-        return ['success' => true, 'message' => 'Successfully updated'];
+        return response()->json(['message' => 'Successfully updated'], 200);
     }
 
     public function destroy($id)
@@ -43,6 +43,6 @@ class StatementController extends Controller
         $user = auth()->guard('client')->user();
         $statement = Statement::where([['user_id', $user->id], ['id', $id]])->firstOrFail();
         $statement->delete();
-        return ['success' => true, 'message' => 'Removed successfully'];
+        return response()->json(['message' => 'Removed successfully'], 200);
     }
 }

@@ -10,13 +10,13 @@ class AuthController extends Controller
     // is-login
     public function isLogin() {
         if (auth()->guard('client')->check()) {
-            return ['success' => true, 'user' => auth()->guard('client')->user()];
+            return response()->json(['user' => auth()->guard('client')->user()], 200);
         }
         elseif(auth()->guard('admin')->check()) {
-            return ['success' => true, 'user' => auth()->guard('admin')->user()];
+            return response()->json(['user' => auth()->guard('admin')->user()], 200);
         }
         else {
-            return ['success' => false, 'user' => null,'isLogout' => false];
+            return response()->json(['user' => null, 'isLogout' => false], 401);
         }
     }
 

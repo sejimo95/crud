@@ -21,7 +21,7 @@ class RegisterController extends Controller
             'password' => 'required|string|min:8|max:250'
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->messages(), 422);
+            return response()->json(['message' => $validator->errors()->first()], 422);
         }
 
         // user store

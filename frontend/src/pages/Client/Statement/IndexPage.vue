@@ -108,12 +108,11 @@ export default {
 
       app.$axios.get(app.$s.api + 'api/v1/panel/client/statement', params)
         .then(function (response) {
-          if (response.data.success) {
-            app.data = response.data.data
-            app.rowsNumber = response.data.meta.total
-          } else {
-            app.notify(response.data.message)
-          }
+          app.data = response.data.data
+          app.rowsNumber = response.data.meta.total
+        })
+        .catch(function (error) {
+          app.notify(error.response.data.message)
         })
         .finally(function () {
           app.loading = false
@@ -133,10 +132,11 @@ export default {
         app.loading = true
         app.$axios.delete(app.$s.api + 'api/v1/panel/client/statement/' + id)
           .then(function (response) {
-            if (response.data.success) {
-              app.loadStatements()
-            }
+            app.loadStatements()
             app.notify(response.data.message)
+          })
+          .catch(function (error) {
+            app.notify(error.response.data.message)
           })
           .finally(function () {
             app.loading = false

@@ -2,10 +2,10 @@
 const routes = [
   // admin
   {
-    path: '/admin/',
+    path: '/',
     component: () => import('layouts/AdminLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Admin/Dashboard/IndexPage.vue') }
+      { path: '/admin/dashboard', component: () => import('pages/Admin/Dashboard/IndexPage.vue') }
     ]
   },
   {
@@ -21,7 +21,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/ClientLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Client/Dashboard/IndexPage.vue') },
+      { path: '/dashboard', component: () => import('pages/Client/Dashboard/IndexPage.vue') },
       { path: '/statements', component: () => import('pages/Client/Statement/IndexPage.vue') }
     ]
   },

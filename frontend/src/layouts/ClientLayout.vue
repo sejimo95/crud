@@ -11,15 +11,10 @@
       <q-list>
         <q-item class="q-mb-md">
           <q-item-section>
-            <q-img
-              alt="logo"
-              fit="contain"
-              src="~assets/logo.png"
-              style="height: 150px;"
-            />
+            <q-img alt="logo" fit="contain" src="~assets/logo.png" style="height: 150px;"/>
           </q-item-section>
         </q-item>
-        <q-item clickable exact to="/">
+        <q-item clickable exact to="/dashboard">
           <q-item-section avatar>
             <q-icon name="mdi-view-dashboard" />
           </q-item-section>
@@ -70,14 +65,13 @@ export default {
 
       app.$axios.post(app.$s.api + 'api/v1/auth/is-login')
         .then(function (response) {
-          if (response.data.success) {
-            app.$s.user = response.data.user
-          } else {
-            localStorage.removeItem('token')
-            app.$s.user = []
-            app.$axios.defaults.headers.common['Authorization'] = ''
-            app.$router.push({ path: '/login' })
-          }
+          app.$s.user = response.data.user
+        })
+        .catch(function (error) {
+          localStorage.removeItem('token')
+          app.$s.user = []
+          app.$axios.defaults.headers.common['Authorization'] = ''
+          app.$router.push({ path: '/login' })
         })
         .finally(function () {
           app.loading = false
@@ -89,12 +83,10 @@ export default {
 
       app.$axios.post(app.$s.api + 'api/v1/auth/logout')
         .then(function (response) {
-          if (response.data.success) {
-            localStorage.removeItem('token')
-            app.$s.user = []
-            app.$axios.defaults.headers.common['Authorization'] = ''
-            app.$router.push({ path: '/login' })
-          }
+          localStorage.removeItem('token')
+          app.$s.user = []
+          app.$axios.defaults.headers.common['Authorization'] = ''
+          app.$router.push({ path: '/login' })
         })
         .finally(function () {
           app.loading = false
